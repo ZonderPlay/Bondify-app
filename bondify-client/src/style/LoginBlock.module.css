@@ -1,0 +1,6 @@
+@impo .login_block {
+  max-width: 900px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}

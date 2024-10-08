@@ -1,0 +1,9 @@
+{
+    "login_welcome_header_text": "Welcome, back!",
+    "login_welcome_paragraph_text": "Let's create something new!",
+    "login_button_text": "Login",
+    "login_connects_description_header_text": "Login by services",
+    "login_connects_description_paragraph_text": "You can login by services",
+    "username_placeholder": "username*",
+    "password_placeholder": "password*"
+}

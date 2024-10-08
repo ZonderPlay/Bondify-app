@@ -1,0 +1,9 @@
+@import '../../style/vars';
+.login_app{
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: $background-color url("./imgs/background-texture.png") no-repeat center/cover;
+}
