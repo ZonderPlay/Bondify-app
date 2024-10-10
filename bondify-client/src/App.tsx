@@ -2,7 +2,13 @@ import {Routes, Route} from 'react-router-dom';
 import './scripts/i18n';
 import { HomePage } from './pages/home';
 import { LoginAppPage } from './pages/login_app';
-function App() {
+import { UserData } from './scripts/types';
+
+
+interface AppProps {
+  userData: UserData | null; // Импортируйте UserData, если необходимо
+}
+const App: React.FC<AppProps> = ({ userData }) =>  {
 
   return (
     <Routes>

@@ -1,6 +1,15 @@
-// Prevents additional console window on Windows in release, DO NOT REMOVE!!
-#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
+mod modules;
+mod commands;
+use modules::user::user; 
+use tauri::{self, generate_context};
+use commands::commands::{get_user_data_command, create_user_command};
+
 
 fn main() {
-  app_lib::run();
+    tauri::Builder::default()
+        .invoke_handler(tauri::generate_handler![create_user_command, get_user_data_command]) // Добавляем обработчики
+        .run(generate_context!())
+        .expect("error while running tauri application");
 }
+
+
