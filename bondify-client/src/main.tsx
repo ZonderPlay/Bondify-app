@@ -13,7 +13,7 @@ import App from './App';
 // Функция для создания или получения данных пользователя
 const createUser = async (): Promise<UserData | null> => {
   try {
-    const userData: UserData = await invoke('create_user_command'); // Вызываем команду Rust
+    const userData: UserData = await invoke('create_user_data_command');
     console.log('User data:', userData);
     return userData;
   } catch (error) {
@@ -28,13 +28,15 @@ const Main: React.FC = () => {
 
   useEffect(() => {
     const fetchUserData = async () => {
-      const data = await createUser();
-      setUserData(data);
+      if (!userData) { // Проверяем, если данные еще не загружены
+        const data = await createUser();
+        setUserData(data);
+      }
       setLoading(false);
     };
-
+  
     fetchUserData();
-  }, []);
+  }, [userData]);
 
   if (loading) {
     return <div>Loading...</div>; // Можно добавить индикатор загрузки

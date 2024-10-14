@@ -8,7 +8,7 @@ const HomePage = () => {
     useEffect(() => {
         // Перенаправление на страницу логина, если пользователь не авторизован
         if (!isLogin) {
-            navigate('/login-app');
+            navigate('/login');
         }
     }, [isLogin, navigate]); // Эффект будет выполняться, когда изменится isLogin или navigate
 

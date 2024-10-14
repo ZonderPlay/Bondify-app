@@ -81,23 +81,7 @@
             width: 80%;
             display: flex;
             flex-wrap: nowrap;
-            justify-content: space-around;
-            & .connects_button{
-                width: 50px;
-                height: 50px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                background-color: rgba(0, 0, 0, 0);
-                border: none;
-                cursor: pointer;
-                & img{
-                    width: 100%;  
-                }
-                & .telegram_icon{  
-                    
-                }
-            }
+            justify-content: space-around; 
         }
         & .description_block{
             width: 80%;
