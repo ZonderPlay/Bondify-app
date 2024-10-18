@@ -1,6 +1,5 @@
 use crate::modules::user::user::{UserData, get_user_data, update_user_data, create_user_data};
 use std::fs;
-use std::collections::HashMap;
 
 #[tauri::command]
 pub fn create_user_data_command() -> Result<UserData, String> {
@@ -55,14 +54,3 @@ pub fn update_user_data_command(
     }
 }
 
-// Получение языков
-#[tauri::command]
-pub fn get_translations_command() -> HashMap<String, String> {
-    let mut translations = HashMap::new();
-
-    // Здесь загружаем JSON-словари для каждого языка
-    translations.insert("en".to_string(), include_str!("../locales/en/en.json").to_string());
-    translations.insert("ru".to_string(), include_str!("../locales/ru/ru.json").to_string());
-
-    translations
-}

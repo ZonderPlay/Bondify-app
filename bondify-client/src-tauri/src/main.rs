@@ -3,7 +3,7 @@ mod modules;
 
 use tauri::{self, generate_context};
 use commands::commands::{
-    get_user_data_command, create_user_data_command, get_translations_command, update_user_data_command
+    get_user_data_command, create_user_data_command, update_user_data_command
 };
 use dotenv::dotenv;
 use rand::{distributions::Alphanumeric, Rng};
@@ -20,7 +20,6 @@ fn main() {
         .invoke_handler(tauri::generate_handler![
             create_user_data_command,
             get_user_data_command,
-            get_translations_command,
             update_user_data_command
         ])
         .run(generate_context!())

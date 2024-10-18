@@ -1,5 +1,4 @@
 import {Routes, Route} from 'react-router-dom';
-import './scripts/i18n';
 import { HomePage } from './pages/home';
 import { LoginPage } from './pages/login';
 import { UserData } from './scripts/types';
