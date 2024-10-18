@@ -1,0 +1,11 @@
+{
+    "login_welcome_header_text": "С возвращением!",
+    "login_welcome_paragraph_text": "Дававайте создадим что-нибудь новое!",
+    "login_button_text": "Вход",
+    "login_connects_description_header_text": "Войти с помощью сервисов",
+    "login_connects_description_paragraph_text": "Вы можете войти с помощью сервисов",
+    "username_placeholder": "логин*",
+    "password_placeholder": "пароль*",
+    "sub_form_forgot_password_text": "Забыли пароль?",
+    "sub_form_register_text": "Нет аккаунта?"
+}
