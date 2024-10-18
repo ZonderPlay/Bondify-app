@@ -6,45 +6,62 @@ import TelegramIcon from './imgs/icons/telegram-icon.svg';
 import GitHubIcon from './imgs/icons/github-icon.svg';
 import GoogleIcon from './imgs/icons/google-icon.svg';
 import { SocialAuthButton } from '../social-auth-button';
+import { useUserContext } from '../user-context/UserContext';
+import { invoke } from '@tauri-apps/api/core';
 
 
 
-
-const LoginBlock = () => {
+const LoginBlock: React.FC = () => {
+    const { userData, setUserData } = useUserContext(); // Получаем userData и setUserData из контекста
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
-    const [language, setLanguage] = useState('en');  // Используем useState для управления языком
-    const [translations, setTranslations] = useState<{ [key: string]: string } | null>(null); // Начальное значение null
-    const [loading, setLoading] = useState(true); // Добавляем состояние для отслеживания загрузки
+    const [language, setLanguage] = useState(userData?.language || 'en');
+    const [translations, setTranslations] = useState<{ [key: string]: string } | null>(null);
+    const [loading, setLoading] = useState(true);
 
     const rulang = import('./locales/ru.json');
     const enlang = import('./locales/en.json');
 
     const t = (key: string) => {
-        return translations ? translations[key] || key : key; // Проверка на наличие переводов
+        return translations ? translations[key] || key : key;
     };
 
     useEffect(() => {
         const changeLanguage = async (key: string) => {
-            setLoading(true); // Устанавливаем статус загрузки перед началом загрузки переводов
+            setLoading(true);
             let translation;
             switch (key) {
                 case 'ru':
-                    translation = (await rulang).default; // Доступ к свойству default
+                    translation = (await rulang).default;
                     break;
                 case 'en':
-                    translation = (await enlang).default; // Доступ к свойству default
+                    translation = (await enlang).default;
                     break;
                 default:
-                    translation = (await enlang).default; // Доступ к свойству default
+                    translation = (await enlang).default;
                     break;
             }
-            setTranslations(translation); // Устанавливаем переводы
-            setLoading(false); // Выключаем статус загрузки
+            setTranslations(translation);
+
+            // Обновляем данные пользователя
+            const result = await invoke('update_user_data_command', {
+                username: userData?.username, // Используйте текущее имя пользователя
+                access_token: userData?.accessToken, // Используйте текущий токен доступа
+                refresh_token: userData?.refreshToken, // Используйте текущий токен обновления
+                theme: userData?.theme, // Используйте текущий темный режим
+                language: key, // Новый язык
+            });
+
+            // Обновляем данные в контексте, если это необходимо
+            if (result) {
+                setUserData((prev) => ({ ...prev, language: key })); // Обновляем язык в контексте
+            }
+
+            setLoading(false);
         };
 
-        changeLanguage(language); // Вызываем функцию смены языка при изменении `language`
-    }, [language]);
+        changeLanguage(language);
+    }, [language, userData, setUserData]);
     
 
     const telegramLoginUrl = `https://telegram.org/api/auth?bot_id=YOUR_BOT_ID&redirect_uri=https://your-site.com/auth/telegram`;
@@ -101,13 +118,13 @@ const LoginBlock = () => {
                 </form>
                 <div className={style.sub_form_block}>
                     <motion.h3
-                    whileHover={{ scale: 1.005, color:'#98bcff' }} 
+                    whileHover={{ scale: 1.03, color:'#98bcff' }} 
                     transition={{ duration: 0.2 }}
                     >
                         {t('sub_form_forgot_password_text')}
                     </motion.h3>
                     <motion.h3
-                    whileHover={{ scale: 1.005, color:'#98bcff' }} 
+                    whileHover={{ scale: 1.03, color:'#98bcff' }} 
                     transition={{ duration: 0.2 }}
                     >
                         {t('sub_form_register_text')}
@@ -150,8 +167,20 @@ const LoginBlock = () => {
                     </motion.p>
                 </div>
                 <div className={style.language_block}>
-                    <button onClick={() => setLanguage('en')}>en</button>
-                    <button onClick={() => setLanguage('ru')}>ru</button>
+                    <motion.button
+                        onClick={() => setLanguage('en')}
+                        whileHover={{ scale: 1.04, color:'#f8f8f8' }} 
+                        transition={{ duration: 0.2 }}
+                    >
+                        en
+                    </motion.button>
+                    <motion.button
+                        onClick={() => setLanguage('ru')}
+                        whileHover={{ scale: 1.04, color:'#f8f8f8' }} 
+                        transition={{ duration: 0.2 }}
+                    >
+                        ru
+                    </motion.button>
                 </div>
             </div>
         </div>

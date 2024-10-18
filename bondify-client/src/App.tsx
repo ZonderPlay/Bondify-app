@@ -1,20 +1,14 @@
-import {Routes, Route} from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { HomePage } from './pages/home';
 import { LoginPage } from './pages/login';
-import { UserData } from './scripts/types';
 
-
-interface AppProps {
-  userData: UserData | null; // Импортируйте UserData, если необходимо
-}
-const App: React.FC<AppProps> = ({ userData }) =>  {
-  console.log(userData)
+const App: React.FC = () => {
   return (
     <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<LoginPage />} />
+      <Route path="/" element={<HomePage />} /> {/* Не передаем userData, так как он доступен из контекста */}
+      <Route path="/login" element={<LoginPage />} />
     </Routes>
-  )
+  );
 }
 
-export default App
+export default App;

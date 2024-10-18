@@ -2,50 +2,43 @@ import { StrictMode, useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
-import { UserData } from './scripts/types'; 
 import { invoke } from '@tauri-apps/api/core';
 
 import './style/index.scss';
 import App from './App';
-
-
+import { UserProvider } from './modules/user-context/UserContext';
 
 // Функция для создания или получения данных пользователя
-const createUser = async (): Promise<UserData | null> => {
+const createUser = async (): Promise<void> => {
   try {
-    const userData: UserData = await invoke('create_user_data_command');
-    console.log('User data:', userData);
-    return userData;
+    await invoke('create_user_data_command');
   } catch (error) {
     console.error('Error loading or creating user data:', error);
-    return null;
   }
 };
 
 const Main: React.FC = () => {
-  const [userData, setUserData] = useState<UserData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchUserData = async () => {
-      if (!userData) { // Проверяем, если данные еще не загружены
-        const data = await createUser();
-        setUserData(data);
-      }
-      setLoading(false);
+      await createUser();
+      setLoading(false); // Устанавливаем статус загрузки только после получения данных
     };
-  
+
     fetchUserData();
-  }, [userData]);
+  }, []);
 
   if (loading) {
     return <div>Loading...</div>; // Можно добавить индикатор загрузки
   }
 
   return (
-    <Router>
-      <App userData={userData} />
-    </Router>
+    <UserProvider>
+      <Router>
+        <App />
+      </Router>
+    </UserProvider>
   );
 };
 
@@ -56,7 +49,3 @@ createRoot(document.getElementById('root')!).render(
     </HelmetProvider>
   </StrictMode>
 );
-
-
-
-

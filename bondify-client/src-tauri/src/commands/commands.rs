@@ -39,12 +39,12 @@ pub fn get_user_data_command() -> Result<Option<UserData>, String> {
 #[tauri::command]
 pub fn update_user_data_command(
     username: Option<String>,
-    asses_token: Option<String>,
+    access_token: Option<String>,
     refresh_token: Option<String>,
     theme: Option<String>,
     language: Option<String>,
 ) -> Result<String, String> {
-    let update_result = update_user_data(username, asses_token, refresh_token, theme, language);
+    let update_result = update_user_data(username, access_token, refresh_token, theme, language);
     
     // Проверка успешности обновления
     if update_result.is_some() {

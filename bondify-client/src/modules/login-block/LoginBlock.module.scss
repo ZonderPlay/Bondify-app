@@ -12,7 +12,7 @@
     border-radius: 7px;
     background-color: $background-color;
     & .form_block{
-        width: 40%;
+        width: 45%;
         display: flex;
         justify-content: space-between;
         flex-direction: column;
@@ -24,7 +24,6 @@
             justify-content: space-around;
             align-items: center;
             flex-direction: column;
-            
             
             & .welcome_description{
                 width: 100%;
@@ -103,7 +102,7 @@
     }
     
     & .connects_container_block{
-        width: 50%;
+        width: 55%;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -116,7 +115,7 @@
             justify-content: space-around; 
         }
         & .description_block{
-            width: 80%;
+            width: 90%;
             margin-top: 20px;
             display: flex;
             flex-direction: column;
